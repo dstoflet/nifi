@@ -192,7 +192,12 @@ public class PutFile extends AbstractProcessor {
         Path tempDotCopyFile = null;
         try {
             final Path rootDirPath = configuredRootDirPath;
-            final Path tempCopyFile = rootDirPath.resolve("." + flowFile.getAttribute(CoreAttributes.FILENAME.key()));
+            final Path fileName = FileSystems.getDefault().getPath(
+                    flowFile.getAttribute(CoreAttributes.FILENAME.key());
+            final String parent = fileName.getParent() != null ? fileName.getParent() : "";
+            final String file = fileName.getFile();
+            final Path fullRootDirPath = rootDirPath.resolve(parent)
+            final Path tempCopyFile = rootDirPath.resolve("." + file);
             final Path copyFile = rootDirPath.resolve(flowFile.getAttribute(CoreAttributes.FILENAME.key()));
 
             if (!Files.exists(rootDirPath)) {
